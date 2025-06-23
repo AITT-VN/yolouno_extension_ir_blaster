@@ -1,0 +1,13 @@
+{
+    "name": "IR BLASTER",
+    "description": "Mục mở rộng Yolobit để làm việc với module IR BLASTER",
+    "libs": [
+        "ir_blaster.py"
+    ],
+    "blocks": [
+        "definition.js"
+    ],
+    "toolbox": "toolbox.xml",
+    "languages": {},
+    "poster": "poster.png"
+}
