@@ -706,6 +706,7 @@ class SONY_20_TX(SONY_ABC):
     valid = (0x1f, 0x7f, 0xff)  # Max addr, data, toggle
     def __init__(self, pin, freq=40000, verbose=False):
         super().__init__(pin, 20, freq, verbose)
+
 class IRBlaster:
     def __init__(self, rx_pin=D3_PIN, tx_pin=D4_PIN, json_file='ir_codes.json'):
         self.rx_pin = Pin(rx_pin, Pin.IN)
@@ -743,12 +744,21 @@ class IRBlaster:
 
     def _save_to_signal_data(self):
         new_entry = (self.result["device"], self.result["protocol"], self.result["data"], self.result["addr"])
-        if new_entry not in self.signal_data:
+
+        updated = False
+        for i, entry in enumerate(self.signal_data):
+            if isinstance(entry, (list, tuple)) and entry[0] == self.result["device"]:
+                self.signal_data[i] = new_entry
+                updated = True
+                print("♻️ Đã cập nhật tín hiệu cho thiết bị:", new_entry)
+                break
+
+        if not updated:
             self.signal_data.append(new_entry)
-            self._save_all_to_file()
-            print("💾 Đã lưu:", new_entry)
-        else:
-            print("⚠️ Đã tồn tại, không lưu lại.")
+            print("💾 Đã thêm mới tín hiệu:", new_entry)
+
+        self._save_all_to_file()
+
 
     def checkscan(self, signal_name):
         for entry in self.signal_data:
@@ -842,3 +852,18 @@ class IRBlaster:
         for i, entry in enumerate(self.signal_data):
             device, proto, data, addr = entry
             print(f"{i+1}. {device} | {proto} | data=0x{data:02X} | addr={addr}")
+
+    def delete_signal(self, signal_name):
+        found = False
+        for i, entry in enumerate(self.signal_data):
+            if isinstance(entry, (list, tuple)) and entry[0] == signal_name:
+                del self.signal_data[i]
+                found = True
+                print(f"🗑️ Đã xóa tín hiệu: {signal_name}")
+                break
+
+        if not found:
+            print(f"⚠️ Không tìm thấy tín hiệu có tên: {signal_name}")
+        else:
+            self._save_all_to_file()
+

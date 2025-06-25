@@ -152,82 +152,34 @@ Blockly.Python['yolo_uno_ir_blaster_create'] = function(block) {
     return code;
 };
 
-Blockly.Blocks['yolo_uno_ir_blaster_show'] = {
-  init: function() {
-    this.jsonInit(
-      {
-          "type": "yolo_uno_ir_blaster_show",
-          "message0": "in ra danh sách tín hiệu hiện tại",
-          "args0": [],
-          "previousStatement": null,
-          "nextStatement": null,
-          "colour": "#6C3483",
-          "tooltip": "",
-          "helpUrl": ""
-        }
-    );
-      }
-  };
-
-Blockly.Python['yolo_uno_ir_blaster_show'] = function(block) {
-    Blockly.Python.definitions_['import_yolo_uno'] = 'from yolo_uno import *';
-    Blockly.Python.definitions_['import_machine'] = 'from ir_blaster import IRBlaster';
-    // TODO: Assemble JavaScript into code variable.
-    var code = 'ir_blaster.show_signal_list()\n';
-    return code;
-};
-
-Blockly.Blocks['yolo_uno_ir_blaster_checkscan'] = {
-  init: function () {
-    this.jsonInit({
-      "type": "yolo_uno_ir_blaster_checkscan",
-      "message0": "kiểm tra tín hiệu %1 %2",
-      "args0": [
-        {
-          "type": "input_value",
-          "name": "MESSAGE"
-        },
-        {
-          "type": "input_dummy",
-        }
-      ],
-      "colour": "#6C3483",
-      "output": "Boolean",
-      "tooltip": "Kiểm tra xem tín hiệu có tên đã được lưu hay chưa",
-      "helpUrl": ""
-    });
-  }
-};
-
-
-Blockly.Python['yolo_uno_ir_blaster_checkscan'] = function (block) {
-  var signal_name = Blockly.Python.valueToCode(block, 'MESSAGE', Blockly.Python.ORDER_ATOMIC);
-  var code = 'ir_blaster.checkscan(' + signal_name + ')';
-  return [code, Blockly.Python.ORDER_ATOMIC];
-};
-
 
 Blockly.Blocks['yolo_uno_ir_blaster_scan'] = {
   init: function () {
     this.jsonInit({
       "type": "yolo_uno_ir_blaster_scan",
-      "message0": "quét và lưu tín hiệu %1 %2 %3",
+      "message0": "quét và lưu tín hiệu %1",
       "args0": [
         {
-          "type": "input_dummy",
-        },
-        {
-          "type": "input_value",
-          "name": "MESSAGE"
-        },
-        {
-          "type": "input_dummy",
+          "type": "field_dropdown",
+          "name": "MESSAGE",
+          "options": [
+            ["1", "1"],
+            ["2", "2"],
+            ["3", "3"],
+            ["4", "4"],
+            ["5", "5"],
+            ["6", "6"],
+            ["7", "7"],
+            ["8", "8"],
+            ["9", "9"],
+            ["10", "10"]
+          ]
         }
       ],
       "previousStatement": null,
       "nextStatement": null,
       "colour": "#6C3483",
-      "tooltip": "Quét và lưu tín hiệu IR cho thiết bị được đặt tên",
+      "tooltip": "Quét và lưu tín hiệu IR cho thiết bị được chọn",
       "helpUrl": "",
       "generator_async": true
     });
@@ -235,26 +187,33 @@ Blockly.Blocks['yolo_uno_ir_blaster_scan'] = {
 };
 
 Blockly.Python['yolo_uno_ir_blaster_scan'] = function (block) {
-  var signal_name = Blockly.Python.valueToCode(block, 'MESSAGE', Blockly.Python.ORDER_ATOMIC);
-  var code = 'await ir_blaster.scan(' + signal_name + ')\n';
+  var signal_number = block.getFieldValue('MESSAGE');  // Get the selected number (1-10)
+  var code = 'await ir_blaster.scan("' + signal_number + '")\n';  // Use the selected number as input
   return code;
 };
+
 
 Blockly.Blocks['yolo_uno_ir_blaster_send'] = {
   init: function () {
     this.jsonInit({
       "type": "yolo_uno_ir_blaster_send",
-      "message0": "gửi tín hiệu %1 %2 %3",
+      "message0": "gửi tín hiệu %1",
       "args0": [
         {
-          "type": "input_dummy",
-        },
-        {
-          "type": "input_value",
-          "name": "MESSAGE"
-        },
-        {
-          "type": "input_dummy",
+          "type": "field_dropdown",
+          "name": "MESSAGE",
+          "options": [
+            ["1", "1"],
+            ["2", "2"],
+            ["3", "3"],
+            ["4", "4"],
+            ["5", "5"],
+            ["6", "6"],
+            ["7", "7"],
+            ["8", "8"],
+            ["9", "9"],
+            ["10", "10"]
+          ]
         }
       ],
       "previousStatement": null,
@@ -268,7 +227,45 @@ Blockly.Blocks['yolo_uno_ir_blaster_send'] = {
 };
 
 Blockly.Python['yolo_uno_ir_blaster_send'] = function (block) {
-  var signal_name = Blockly.Python.valueToCode(block, 'MESSAGE', Blockly.Python.ORDER_ATOMIC);
-  var code = 'await ir_blaster.send(' + signal_name + ')\n';
+  var signal_number = block.getFieldValue('MESSAGE');  // Get the selected number (1-10)
+  var code = 'await ir_blaster.send("' + signal_number + '")\n';  // Use the selected number as input
+  return code;
+};
+
+Blockly.Blocks['yolobit_ir_blaster_delete'] = {
+  init: function () {
+    this.jsonInit({
+      "type": "yolobit_ir_blaster_delete",
+      "message0": "xóa tín hiệu %1",
+      "args0": [
+        {
+          "type": "field_dropdown",
+          "name": "MESSAGE",
+          "options": [
+            ["1", "1"],
+            ["2", "2"],
+            ["3", "3"],
+            ["4", "4"],
+            ["5", "5"],
+            ["6", "6"],
+            ["7", "7"],
+            ["8", "8"],
+            ["9", "9"],
+            ["10", "10"]
+          ]
+        }
+      ],
+      "previousStatement": null,
+      "nextStatement": null,
+      "colour": "#6C3483",
+      "tooltip": "Xóa tín hiệu IR đã lưu theo tên thiết bị",
+      "helpUrl": ""
+    });
+  }
+};
+
+Blockly.Python['yolobit_ir_blaster_delete'] = function (block) {
+  var signal_name = block.getFieldValue('MESSAGE');
+  var code = 'ir_blaster.delete_signal("' + signal_name + '")\n';
   return code;
 };

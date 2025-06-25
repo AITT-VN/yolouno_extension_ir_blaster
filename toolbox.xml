@@ -1,31 +1,10 @@
 <xml xmlns="https://developers.google.com/blockly/xml" id="toolbox" style="display: none">
   <category name="IR Blaster" colour="#6C3483" icon="bullseye">
+    
     <block type="yolo_uno_ir_blaster_create"></block>
-    <block type="yolo_uno_ir_blaster_show"></block>
-
-    <block type="yolo_uno_ir_blaster_checkscan">
-      <value name="MESSAGE">
-        <shadow type="text">
-          <field name="TEXT">TV_ON</field>
-        </shadow>
-      </value>
-    </block>
-
-    <block type="yolo_uno_ir_blaster_scan">
-      <value name="MESSAGE">
-        <shadow type="text">
-          <field name="TEXT">TV_ON</field>
-        </shadow>
-      </value>
-    </block>
-
-    <block type="yolo_uno_ir_blaster_send">
-      <value name="MESSAGE">
-        <shadow type="text">
-          <field name="TEXT">TV_ON</field>
-        </shadow>
-      </value>
-    </block>
+    <block type="yolo_uno_ir_blaster_scan"></block>
+    <block type="yolo_uno_ir_blaster_send"></block>
+    <block type="yolobit_ir_blaster_delete"></block>
 
   </category>
 </xml>
